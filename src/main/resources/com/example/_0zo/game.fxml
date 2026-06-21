@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="620"
+            prefWidth="800"
+            styleClass="root-game"
+            stylesheets="@styles.css"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example._0zo.controller.GameController">
+
+    <!-- TOP -->
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="16"
+              styleClass="top-bar">
+
+            <Label fx:id="deckInfoLabel"
+                   styleClass="deck-info"
+                   text="Mazo: 48 cartas"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label fx:id="sumBadge"
+                   styleClass="sum-badge"
+                   text="0"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label fx:id="turnLabel"
+                   styleClass="turn-label"
+                   text="Turno: Jugador 1"/>
+
+        </HBox>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <VBox spacing="14"
+              styleClass="center-pane">
+
+            <padding>
+                <Insets top="16" right="24" bottom="16" left="24"/>
+            </padding>
+
+            <!-- Opponents -->
+            <HBox fx:id="opponentsRow"
+                  alignment="CENTER"
+                  spacing="20"
+                  styleClass="opponents-row">
+
+                <VBox alignment="CENTER" spacing="4">
+                    <Label fx:id="opp1Name"
+                           styleClass="opp-name-label"
+                           text="CPU 1"/>
+                    <HBox fx:id="opp1Cards" spacing="3">
+                        <Pane styleClass="opp-card-back"/>
+                        <Pane styleClass="opp-card-back"/>
+                        <Pane styleClass="opp-card-back"/>
+                    </HBox>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="4">
+                    <Label fx:id="opp2Name"
+                           styleClass="opp-name-label"
+                           text="CPU 2"/>
+                    <HBox fx:id="opp2Cards" spacing="3">
+                        <Pane styleClass="opp-card-back"/>
+                        <Pane styleClass="opp-card-back"/>
+                        <Pane styleClass="opp-card-back"/>
+                    </HBox>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="4">
+                    <Label fx:id="opp3Name"
+                           styleClass="opp-name-label"
+                           text="CPU 3"/>
+                    <HBox fx:id="opp3Cards" spacing="3">
+                        <Pane styleClass="opp-card-back"/>
+                        <Pane styleClass="opp-card-back"/>
+                        <Pane styleClass="opp-card-back"/>
+                    </HBox>
+                </VBox>
+
+            </HBox>
+
+            <!-- Table -->
+            <HBox alignment="CENTER"
+                  spacing="40"
+                  styleClass="table-area"
+                  VBox.vgrow="ALWAYS">
+
+                <!-- Deck -->
+                <VBox alignment="CENTER"
+                      spacing="2"
+                      prefHeight="100"
+                      prefWidth="70"
+                      styleClass="deck-pile"
+                      onMouseClicked="#onDeckClicked">
+
+                    <Label styleClass="card-back-icon"
+                           text="🂠"/>
+
+                    <Label fx:id="deckPileCount"
+                           styleClass="deck-pile-count"
+                           text="48"/>
+
+                </VBox>
+
+                <!-- Table card -->
+                <VBox alignment="CENTER" spacing="8">
+
+                    <Label styleClass="table-hint"
+                           text="Carta en mesa"/>
+
+                    <VBox fx:id="tableCard"
+                          alignment="CENTER"
+                          prefHeight="100"
+                          prefWidth="70"
+                          spacing="2"
+                          styleClass="playing-card">
+
+                        <Label fx:id="tableCardRank"
+                               styleClass="card-rank"
+                               text="A"/>
+
+                        <Label fx:id="tableCardSuit"
+                               styleClass="card-suit"
+                               text="♠"/>
+
+                        <Label fx:id="tableCardHint"
+                               styleClass="card-value-hint"
+                               text="+1"/>
+
+                    </VBox>
+
+                </VBox>
+
+                <!-- Sum -->
+                <VBox alignment="CENTER" spacing="6">
+
+                    <Label styleClass="table-hint"
+                           text="Suma"/>
+
+                    <Label fx:id="lastValueBadge"
+                           styleClass="last-value-badge"
+                           text="1"/>
+
+                </VBox>
+
+            </HBox>
+
+            <!-- Log -->
+            <TextArea fx:id="logArea"
+                      editable="false"
+                      prefHeight="80"
+                      maxHeight="80"
+                      wrapText="true"
+                      styleClass="log-area"/>
+
+        </VBox>
+    </center>
+
+    <!-- HUMAN HAND -->
+    <bottom>
+        <VBox spacing="8"
+              styleClass="hand-area">
+
+            <Label styleClass="hand-hint"
+                   text="Tu mano — clic para jugar"/>
+
+            <HBox fx:id="humanHandBox"
+                  alignment="CENTER_LEFT"
+                  spacing="10"
+                  styleClass="human-hand-box">
+
+            </HBox>
+
+        </VBox>
+    </bottom>
+
+</BorderPane>
