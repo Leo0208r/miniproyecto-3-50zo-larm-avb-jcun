@@ -21,7 +21,7 @@ public class GameStage {
 
     private static Stage gameStage;
     private static List<Player> players;
-    private static final String FXML_PATH = "/com/example/_0zo/game.fxml";
+    private static final String FXML_PATH = "/com/example/_0zo/game-view.fxml";
 
     /**
      * Private constructor to prevent instantiation.
