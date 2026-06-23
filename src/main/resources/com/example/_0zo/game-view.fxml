@@ -45,8 +45,7 @@
    <!-- ================= CENTER ================= -->
    <center>
       <VBox spacing="14"
-            style="-fx-background-color: radial-gradient(center 50% 50%, radius 85%, #07462c, #021f13);"
-            padding="16">
+            style="-fx-background-color: radial-gradient(center 50% 50%, radius 85%, #07462c, #021f13); -fx-padding: 16;">
 
          <!-- OPONENTES -->
          <HBox fx:id="opponentsRow" alignment="CENTER" spacing="20">

@@ -10,6 +10,7 @@ import com.example._0zo.model.players.Player;
 import com.example._0zo.view.GameStage;
 import com.example._0zo.view.EndStage;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -435,5 +436,13 @@ public class GameController implements GameEventListener {
     private void onDeckClicked() {
         // This could be used to show deck information or stats
         logMessage("Deck clicked. Cards remaining: " + gameEngine.getDeckSize());
+    }
+    @FXML
+    private void onHandleHelp(ActionEvent event) {
+
+    }
+    @FXML
+    private void onHandleUndo(ActionEvent event) {
+
     }
 }

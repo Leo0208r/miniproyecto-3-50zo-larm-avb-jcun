@@ -4,6 +4,8 @@ import com.example._0zo.model.players.HumanPlayer;
 import com.example._0zo.model.players.MachinePlayer;
 import com.example._0zo.model.players.Player;
 import com.example._0zo.view.GameStage;
+import com.example._0zo.view.MenuStage;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -19,16 +21,13 @@ import java.util.List;
 public class MenuController {
 
     @FXML
-    private Button btn1;
+    private Button button1;
 
     @FXML
-    private Button btn2;
+    private Button button2;
 
     @FXML
-    private Button btn3;
-
-    @FXML
-    private Button btnPlay;
+    private Button button3;
 
     private int selectedPlayers = 0;
 
@@ -37,13 +36,10 @@ public class MenuController {
      */
     @FXML
     public void initialize() {
-        btn1.setOnAction(event -> selectPlayers(1));
-        btn2.setOnAction(event -> selectPlayers(2));
-        btn3.setOnAction(event -> selectPlayers(3));
-        btnPlay.setOnAction(event -> startGame());
+        button1.setOnAction(event -> selectPlayers(1));
+        button2.setOnAction(event -> selectPlayers(2));
+        button3.setOnAction(event -> selectPlayers(3));
 
-        // Initially disable the play button until a selection is made
-        btnPlay.setDisable(true);
     }
 
     /**
@@ -55,12 +51,11 @@ public class MenuController {
         selectedPlayers = numPlayers;
 
         // Visual feedback: update button styles
-        btn1.setStyle(numPlayers == 1 ? "-fx-background-color: #4CAF50;" : "");
-        btn2.setStyle(numPlayers == 2 ? "-fx-background-color: #4CAF50;" : "");
-        btn3.setStyle(numPlayers == 3 ? "-fx-background-color: #4CAF50;" : "");
+        button1.setStyle(numPlayers == 1 ? "-fx-background-color: #4CAF50;" : "");
+        button2.setStyle(numPlayers == 2 ? "-fx-background-color: #4CAF50;" : "");
+        button3.setStyle(numPlayers == 3 ? "-fx-background-color: #4CAF50;" : "");
 
         // Enable play button
-        btnPlay.setDisable(false);
     }
 
     /**
@@ -81,6 +76,11 @@ public class MenuController {
 
         // Transition to the game stage
         GameStage.setPlayers(players);
+        GameStage.showView();
+    }
+    @FXML
+    void onHandlePlay(ActionEvent event) {
+        MenuStage.deleteView();
         GameStage.showView();
     }
 }
