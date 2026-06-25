@@ -3,7 +3,7 @@ package com.example._0zo.model;
 import com.example._0zo.model.enums.Rank;
 import com.example._0zo.model.enums.Suit;
 
-public class Card {
+public class  Card {
     private final Suit suit;
     private final Rank rank;
     public Card(Suit suit, Rank rank){
