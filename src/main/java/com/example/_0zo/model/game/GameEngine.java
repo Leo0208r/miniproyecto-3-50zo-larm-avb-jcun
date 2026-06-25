@@ -12,79 +12,89 @@ import com.example._0zo.model.players.Player;
 import java.util.List;
 
 public class GameEngine {
+
     private final GameState state;
-    private final Deck deck;
-    private final Table table;
-    public GameEngine(List<Player> players){
-        if (players == null || players.isEmpty()) {
+    private final Deck      deck;
+    private final Table     table;
+
+    public GameEngine(List<Player> players) {
+        if (players == null || players.isEmpty())
             throw new IllegalArgumentException("Player list must not be null or empty.");
-        }
         this.deck  = new Deck();
         this.table = new Table();
         this.state = new GameState(players);
     }
+
     public void setupGame() throws InvalidMoveException {
         for (Player player : state.getAllPlayers()) {
             for (int i = 0; i < 4; i++) {
-                Card card = drawFromDeckWithRefill();
-                player.receiveCard(card);
+                player.receiveCard(drawFromDeckWithRefill());
             }
         }
-        Card initialCard = drawFromDeckWithRefill();
-        table.placeInitialCard(initialCard);
+        Card initial = drawFromDeckWithRefill();
+        table.placeInitialCard(initial);
     }
+
     public void playHumanCard(HumanPlayer player, Card card)
             throws InvalidMoveException, GameOverException {
-        if (!player.getHand().contains(card)) {
+        if (!player.getHand().contains(card))
+            throw new InvalidMoveException("La carta no está en tu mano.");
+        if (!card.isPlayable(table.getSum()))
             throw new InvalidMoveException(
-                    "Card " + card + " is not in " + player.getName() + "'s hand.");
-        }
-        if (!card.isPlayable(table.getSum())) {
-            throw new InvalidMoveException(
-                    "Playing " + card + " would exceed 50. Current sum: " + table.getSum(),
-                    table.getSum(),
-                    card.getValue(table.getSum()));
-        }
+                    "Jugar " + card.getRank().getSymbol() + card.getSuit().getSymbol()
+                    + " excedería 50. Suma actual: " + table.getSum(),
+                    table.getSum(), card.getValue(table.getSum()));
         table.placeInitialCard(card);
         player.removeCard(card);
+        checkGameOver();
     }
+
     public void playMachineTurn(MachinePlayer machine)
             throws InvalidMoveException, GameOverException {
         Card chosen = machine.selectCard(table.getSum());
         table.placeInitialCard(chosen);
         machine.removeCard(chosen);
+        checkGameOver();
     }
-    public void drawCard(Player player) {
-        Card drawn = drawFromDeckWithRefill();
-        player.receiveCard(drawn);
-    }
+
+    /**
+     * Eliminates the current player if they cannot play.
+     * Returns true if eliminated, false if they can still play.
+     * Throws GameOverException if only one player remains after elimination.
+     */
     public boolean eliminateCurrentPlayer() throws GameOverException {
         Player current = state.getCurrentPlayer();
+        if (current == null || current.canPlay(table.getSum())) return false;
 
-        if (current == null || current.canPlay(table.getSum())) {
-            return false;
-        }
         current.eliminate();
         List<Card> surrendered = current.surrenderHand();
         deck.refill(surrendered);
+        deck.shuffle();
 
+        checkGameOver();
+        return true;
+    }
+
+    private void checkGameOver() throws GameOverException {
         if (state.isGameOver()) {
-            Player winner = state.getActivePlayers().isEmpty()
-                    ? null
-                    : state.getActivePlayers().get(0);
+            List<Player> active = state.getActivePlayers();
+            Player winner = active.isEmpty() ? null : active.get(0);
             state.setWinner(winner);
             state.setGameRunning(false);
             throw new GameOverException(
-                    "Game over! Winner: " + (winner != null ? winner.getName() : "nobody"),
-                    winner,
-                    state.getTotalRounds());
+                    "¡Fin! Ganador: " + (winner != null ? winner.getName() : "nadie"),
+                    winner, state.getTotalRounds());
         }
-
-        return true;
     }
+
+    public void drawCard(Player player) {
+        player.receiveCard(drawFromDeckWithRefill());
+    }
+
     public void advanceTurn() {
         state.advanceTurn();
     }
+
     private Card drawFromDeckWithRefill() {
         if (deck.isEmpty()) {
             List<Card> tableCards = table.collectForRefill();
@@ -93,19 +103,11 @@ public class GameEngine {
         }
         return deck.draw();
     }
-    public int getTableSum() {
-        return table.getSum();
-    }
-    public Card getTopCard() {
-        return table.getTopCard();
-    }
-    public int getDeckSize() {
-        return deck.size();
-    }
-    public GameState getState() {
-        return state;
-    }
-    public Player getCurrentPlayer() {
-        return state.getCurrentPlayer();
-    }
+
+    // Getters
+    public int     getTableSum()     { return table.getSum(); }
+    public Card    getTopCard()      { return table.getTopCard(); }
+    public int     getDeckSize()     { return deck.size(); }
+    public GameState getState()      { return state; }
+    public Player  getCurrentPlayer(){ return state.getCurrentPlayer(); }
 }
