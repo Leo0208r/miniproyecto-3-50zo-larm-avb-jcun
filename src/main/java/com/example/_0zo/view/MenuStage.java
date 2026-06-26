@@ -50,7 +50,7 @@ public class MenuStage {
         } catch (IOException e) {
             throw new RuntimeException("Failed to load menu-view.fxml", e);
         }
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 600, 450);
         menuStage.setScene(scene);
         menuStage.setTitle("Cincuentazo");
         menuStage.getIcons().add(new Image(
