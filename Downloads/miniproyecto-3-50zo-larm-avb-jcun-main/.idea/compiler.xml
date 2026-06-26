@@ -9,8 +9,5 @@
         <module name="Cincuentazo" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Cincuentazo" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>

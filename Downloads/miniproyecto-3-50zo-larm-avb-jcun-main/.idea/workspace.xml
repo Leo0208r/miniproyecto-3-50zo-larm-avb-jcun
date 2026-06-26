@@ -11,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="103" />
+    <option name="cachedIndexableFilesCount" value="270" />
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -29,9 +29,9 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "junie.onboarding.icon.badge.shown": "true",
@@ -41,6 +41,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
@@ -62,7 +63,9 @@
       <option name="presentableId" value="Default" />
       <updated>1782439841337</updated>
       <workItem from="1782439842539" duration="130000" />
-      <workItem from="1782441690106" duration="6462000" />
+      <workItem from="1782441690106" duration="5117000" />
+      <workItem from="1782448409589" duration="34000" />
+      <workItem from="1782448454246" duration="315000" />
     </task>
     <servers />
   </component>
