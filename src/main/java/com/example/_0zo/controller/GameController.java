@@ -27,6 +27,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * JavaFX controller for the main game screen.
+ *
+ * <p>Implements {@link GameEventListener} to receive game events from the
+ * {@link com.example._0zo.model.game.TurnManager} running on a background thread.
+ * All UI mutations are dispatched via {@link javafx.application.Platform#runLater}.</p>
+ *
+ * <p>Responsibilities:</p>
+ * <ul>
+ *   <li>Initialising the {@link com.example._0zo.model.game.GameEngine} and
+ *       {@link com.example._0zo.model.game.TurnManager} on startup.</li>
+ *   <li>Rendering player hands (face-up for the human, face-down for machines).</li>
+ *   <li>Displaying the top card and cumulative sum with colour-coded urgency.</li>
+ *   <li>Forwarding human card-click events to the {@code TurnManager}.</li>
+ *   <li>Logging game events to the side panel.</li>
+ *   <li>Transitioning to the {@link com.example._0zo.view.EndStage} when the game ends.</li>
+ * </ul>
+ *
+ * @author Leonardo Alexis
+ * @author Julio Cesar
+ * @author Alejandro Velez
+ * @version 1.0
+ */
+
 public class GameController implements GameEventListener {
 
     // Top bar
@@ -68,7 +92,11 @@ public class GameController implements GameEventListener {
     // Card image cache
     private final Map<String, Image> imageCache = new HashMap<>();
 
+    /**
+     * Initialises the controller, sets up the game engine and starts the turn loop.
+     */
     @FXML
+
     public void initialize() {
         playerCardDisplays = new HashMap<>();
         allPlayers = GameStage.getPlayers();
@@ -96,6 +124,9 @@ public class GameController implements GameEventListener {
 
     // ─── Setup ────────────────────────────────────────────────────────────────
 
+    /**
+     * Associates each player with an HBox display slot and hides unused opponent panels.
+     */
     private void setupPlayerDisplays() {
         playerCardDisplays.put(allPlayers.get(0), humanHandBox);
 
@@ -120,6 +151,9 @@ public class GameController implements GameEventListener {
 
     // ─── UI update ────────────────────────────────────────────────────────────
 
+    /**
+     * Refreshes all UI components to reflect the current game state.
+     */
     private void updateUI() {
         updateDeckInfo();
         updateSumBadge();
@@ -128,12 +162,19 @@ public class GameController implements GameEventListener {
         updateTurnLabel();
     }
 
+    /**
+     * Updates the deck-size labels in the top bar and the deck pile counter.
+     */
     private void updateDeckInfo() {
         int size = gameEngine.getDeckSize();
         deckInfoLabel.setText("👑 Mazo: " + size + " cartas");
         deckPileCount.setText(String.valueOf(size));
     }
 
+    /**
+     * Updates the sum badge colour (green → orange → red) based on how close the
+     * cumulative sum is to 50.
+     */
     private void updateSumBadge() {
         int sum = gameEngine.getTableSum();
         sumBadge.setText(String.valueOf(sum));
@@ -144,6 +185,10 @@ public class GameController implements GameEventListener {
         lastValueBadge.setStyle("-fx-text-fill: " + color + "; -fx-font-size: 24px;");
     }
 
+    /**
+     * Renders the top card on the table; uses a card image if available, otherwise
+     * falls back to a text representation.
+     */
     private void updateTableCard() {
         Card top = gameEngine.getTopCard();
         if (top == null) return;
@@ -166,6 +211,10 @@ public class GameController implements GameEventListener {
         }
     }
 
+    /**
+     * Re-renders the hand display for every player. Human cards are shown face-up
+     * (interactive); machine cards are shown face-down.
+     */
     private void updatePlayerHands() {
         for (Player player : allPlayers) {
             HBox box = playerCardDisplays.get(player);
@@ -179,6 +228,9 @@ public class GameController implements GameEventListener {
         }
     }
 
+    /**
+     * Updates the turn label to show the name of the current player.
+     */
     private void updateTurnLabel() {
         Player cur = gameEngine.getCurrentPlayer();
         if (cur != null) turnLabel.setText("Turno: " + cur.getName());
@@ -186,6 +238,16 @@ public class GameController implements GameEventListener {
 
     // ─── Card visuals ─────────────────────────────────────────────────────────
 
+    /**
+     * Creates an interactive face-up card node for the human player's hand.
+     *
+     * <p>Uses a card image when available; falls back to a styled text label.
+     * Includes hover scale animation and a click handler that submits the card
+     * to the turn manager.</p>
+     *
+     * @param card the card to render
+     * @return a {@link javafx.scene.layout.StackPane} representing the card visually
+     */
     private StackPane createFaceCard(Card card) {
         StackPane sp = new StackPane();
         sp.setMinSize(60, 86);  sp.setMaxSize(60, 86);
@@ -219,6 +281,13 @@ public class GameController implements GameEventListener {
         return sp;
     }
 
+    /**
+     * Creates a face-down card node for an opponent's hand.
+     *
+     * <p>Uses the back-of-card image when available; falls back to a blue rectangle.</p>
+     *
+     * @return a {@link javafx.scene.layout.StackPane} showing a card back
+     */
     private StackPane createBackCard() {
         StackPane sp = new StackPane();
         sp.setMinSize(50, 72); sp.setMaxSize(50, 72);
@@ -235,6 +304,12 @@ public class GameController implements GameEventListener {
         return sp;
     }
 
+    /**
+     * Retrieves (or loads and caches) the image for the given card.
+     *
+     * @param card the card whose image is needed
+     * @return the {@link javafx.scene.image.Image}, or {@code null} if not found on the classpath
+     */
     private Image getCardImage(Card card) {
         String key = cardImageKey(card);
         if (imageCache.containsKey(key)) return imageCache.get(key);
@@ -248,6 +323,11 @@ public class GameController implements GameEventListener {
         } catch (Exception e) { return null; }
     }
 
+    /**
+     * Retrieves (or loads and caches) the card-back image.
+     *
+     * @return the back {@link javafx.scene.image.Image}, or {@code null} if not found
+     */
     private Image getBackImage() {
         if (imageCache.containsKey("back")) return imageCache.get("back");
         try {
@@ -260,7 +340,12 @@ public class GameController implements GameEventListener {
     }
 
     /**
-     * Converts Card to image filename key: e.g. ACE of HEARTS -> AH
+     * Converts a {@link Card} to the filename key used to load its image.
+     *
+     * <p>Example: ACE of HEARTS → {@code "AH"}, TEN of CLUBS → {@code "10C"}.</p>
+     *
+     * @param card the card to convert
+     * @return the image filename key (without extension)
      */
     private String cardImageKey(Card card) {
         String rank = switch (card.getRank()) {
@@ -289,6 +374,14 @@ public class GameController implements GameEventListener {
 
     // ─── Actions ──────────────────────────────────────────────────────────────
 
+    /**
+     * Handles a card click from the human player.
+     *
+     * <p>Ignores the event if it is not the human's turn; otherwise forwards
+     * the selected card to the turn manager.</p>
+     *
+     * @param card the card that was clicked
+     */
     private void onCardSelected(Card card) {
         if (gameEngine.getCurrentPlayer() != humanPlayer) {
             logMessage("⚠ No es tu turno.");
@@ -297,26 +390,42 @@ public class GameController implements GameEventListener {
         turnManager.submitHumanCard(card);
     }
 
+    /**
+     * Handles a click on the deck pile; logs the remaining card count.
+     */
     @FXML private void onDeckClicked() {
         logMessage("🃏 Mazo: " + gameEngine.getDeckSize() + " cartas restantes.");
     }
 
+    /**
+     * Displays the game rules summary in the log panel.
+     */
     @FXML private void onHandleHelp() {
         logMessage("📋 Reglas: 2-8 y 10 suman; J/Q/K restan 10; 9 es neutro; A suma 1 o 10.");
     }
 
+    /**
+     * Notifies the user that undo is not available in this version.
+     */
     @FXML private void onHandleUndo() {
         logMessage("↩ Deshacer no está disponible en esta versión.");
     }
 
     // ─── Logging ──────────────────────────────────────────────────────────────
 
+    /**
+     * Appends a message to the game log panel on the JavaFX Application Thread.
+     *
+     * @param msg the message to append
+     */
     private void logMessage(String msg) {
         if (logArea != null) Platform.runLater(() -> logArea.appendText(msg + "\n"));
     }
 
     // ─── Animation helpers ────────────────────────────────────────────────────
-
+    /**
+     * Plays a brief fade-in animation on the table card pane to signal a new card was placed.
+     */
     private void animateCardPlay() {
         FadeTransition ft = new FadeTransition(Duration.millis(300), tableCardPane);
         ft.setFromValue(0.3); ft.setToValue(1.0);
@@ -332,8 +441,8 @@ public class GameController implements GameEventListener {
             // Highlight human hand when it's their turn
             boolean myTurn = player instanceof HumanPlayer;
             humanHandBox.setStyle(myTurn
-                ? "-fx-border-color: #fbbf24; -fx-border-width: 2; -fx-border-radius: 6; -fx-padding: 6;"
-                : "-fx-padding: 6;");
+                    ? "-fx-border-color: #fbbf24; -fx-border-width: 2; -fx-border-radius: 6; -fx-padding: 6;"
+                    : "-fx-padding: 6;");
         });
     }
 

@@ -1,0 +1,9 @@
+module:com.example._0zo
+com.example._0zo
+com.example._0zo.controller
+com.example._0zo.model
+com.example._0zo.model.enums
+com.example._0zo.model.exceptions
+com.example._0zo.model.game
+com.example._0zo.model.players
+com.example._0zo.view
