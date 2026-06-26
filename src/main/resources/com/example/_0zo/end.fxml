@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER"
+      prefHeight="560" prefWidth="480"
+      spacing="24"
+      style="-fx-background-color: radial-gradient(center 50% 50%, radius 90%, #07462c, #021f13);"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example._0zo.controller.EndController">
+
+    <padding>
+        <Insets top="32" right="32" bottom="32" left="32"/>
+    </padding>
+
+    <!-- Trophy icon -->
+    <Label fx:id="resultIcon" text="🏆"
+           style="-fx-font-size: 64px;"/>
+
+    <!-- Subtitle -->
+    <Label fx:id="resultSubtitle" text="¡Ganador de la partida!"
+           style="-fx-text-fill: #86efac; -fx-font-size: 16px;"/>
+
+    <!-- Winner name -->
+    <Label fx:id="winnerName" text="Jugador 1"
+           style="-fx-text-fill: #fbbf24; -fx-font-size: 36px; -fx-font-weight: bold;"/>
+
+    <!-- Stats row -->
+    <HBox alignment="CENTER" spacing="16">
+
+        <VBox alignment="CENTER" spacing="4"
+              style="-fx-background-color: rgba(0,0,0,0.35); -fx-background-radius: 8;
+                     -fx-border-color: #fbbf24; -fx-border-radius: 8; -fx-padding: 14;">
+            <Label fx:id="statRoundsValue" text="—"
+                   style="-fx-text-fill: #fbbf24; -fx-font-size: 28px; -fx-font-weight: bold;"/>
+            <Label text="Rondas"
+                   style="-fx-text-fill: #d1fae5; -fx-font-size: 12px;"/>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="4"
+              style="-fx-background-color: rgba(0,0,0,0.35); -fx-background-radius: 8;
+                     -fx-border-color: #fbbf24; -fx-border-radius: 8; -fx-padding: 14;">
+            <Label fx:id="statCardsValue" text="—"
+                   style="-fx-text-fill: #fbbf24; -fx-font-size: 28px; -fx-font-weight: bold;"/>
+            <Label text="Cartas jugadas"
+                   style="-fx-text-fill: #d1fae5; -fx-font-size: 12px;"/>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="4"
+              style="-fx-background-color: rgba(0,0,0,0.35); -fx-background-radius: 8;
+                     -fx-border-color: #fbbf24; -fx-border-radius: 8; -fx-padding: 14;">
+            <Label fx:id="statMaxSumValue" text="—"
+                   style="-fx-text-fill: #fbbf24; -fx-font-size: 28px; -fx-font-weight: bold;"/>
+            <Label text="Suma máx."
+                   style="-fx-text-fill: #d1fae5; -fx-font-size: 12px;"/>
+        </VBox>
+
+    </HBox>
+
+    <!-- Buttons -->
+    <VBox spacing="12" maxWidth="300" fillWidth="true">
+        <Button fx:id="btnRematch" text="▶  Revancha"
+                prefHeight="48" maxWidth="Infinity"
+                onAction="#onRematchClicked"
+                style="-fx-background-color: #fbbf24; -fx-text-fill: #021f13;
+                       -fx-font-weight: bold; -fx-font-size: 16px;
+                       -fx-background-radius: 8; -fx-cursor: hand;"/>
+        <Button fx:id="btnMenu" text="← Volver al menú"
+                prefHeight="40" maxWidth="Infinity"
+                onAction="#onMenuClicked"
+                style="-fx-background-color: #032415; -fx-text-fill: #fbbf24;
+                       -fx-border-color: #fbbf24; -fx-border-radius: 8;
+                       -fx-font-size: 14px; -fx-cursor: hand;"/>
+    </VBox>
+
+</VBox>
