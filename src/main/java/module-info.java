@@ -1,3 +1,7 @@
+/**
+ * Main module for the Cincuentazo application.
+ * Requires JavaFX controls and FXML for the graphical interface.
+ */
 module com.example._0zo {
     requires javafx.controls;
     requires javafx.fxml;
