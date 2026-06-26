@@ -32,6 +32,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "junie.onboarding.icon.badge.shown": "true",
@@ -65,7 +66,7 @@
       <workItem from="1782439842539" duration="130000" />
       <workItem from="1782441690106" duration="5117000" />
       <workItem from="1782448409589" duration="34000" />
-      <workItem from="1782448454246" duration="315000" />
+      <workItem from="1782448454246" duration="623000" />
     </task>
     <servers />
   </component>
