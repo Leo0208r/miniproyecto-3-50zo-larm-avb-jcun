@@ -2,6 +2,13 @@
 
 A JavaFX-based poker game for 1 to 3 players. Play against AI opponents or with other players in this classic card game implementation.
 
+## Authors
+
+- **Leonardo Rosero** - 2518313
+- **Alejandro Velez** - 2521169
+- **Julio Cesar** - 2517931
+
+
 ## Features
 
 - **Multiplayer Support**: Play with 1 to 3 players
@@ -125,12 +132,6 @@ Run the test suite:
 ```bash
 ./mvnw test
 ```
-
-## Authors
-
-- **Leonardo Rosero** - 2518313
-- **Alejandro Velez** - 2521169
-- **Julio Cesar** - 2517931
 
 ## License
 
